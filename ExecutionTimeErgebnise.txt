@@ -1,0 +1,16 @@
+100 myfunc1:		Start-time      :  1653645752 s 343865355 
+			Completion-time :  1653645753 s 614029816 
+			Execution-time  :           1 s 270164461
+
+
+100 myfunc2:		Start-time      :  1653645887 s 963939410 
+			Completion-time :  1653645905 s  54749669 
+			Execution-time  :          17 s 909189741 
+
+50%:			Start-time      :  1653646058 s 951223870 
+			Completion-time :  1653646069 s  80570031 
+			Execution-time  :          10 s 870653839 
+
+20 % myfunc2:		Start-time      :  1653646117 s 367823149 
+			Completion-time :  1653646121 s   3399635 
+			Execution-time  :           3 s 364423514 

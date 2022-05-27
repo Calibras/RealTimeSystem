@@ -5,13 +5,17 @@
 struct timespec diff_time(struct timespec *start, struct timespec *end) {
 	// calculate: dt = start - end
 	struct timespec dt;
-	if(*end.tv_nsec > *start.tv_nsec){
+	if(end->tv_nsec > start->tv_nsec){
 	    //"normal Rechnen"
-	    dt.tv_sec = *end.tv_sec - *start.tv_sec;
-	    dt.tv_nsec = *end.tv_nsec - *start.tv_nsec;
+	    dt.tv_sec = (end->tv_sec - start->tv_sec);
+	    dt.tv_nsec = end->tv_nsec - start->tv_nsec;
 	}
-
-	return dt
+	else if(end->tv_nsec < start->tv_nsec){
+	    dt.tv_sec = (end->tv_sec - start->tv_sec) - 1;
+	    dt.tv_nsec = -1* (1e-9 - (start->tv_nsec - end->tv_nsec));
+	}
+	
+	return dt;
 }
 
   //  Do not change the function myfunc1 !
@@ -44,11 +48,9 @@ int main ( int argc , char ** argv ){
 	//  variable for the execution time	
 	struct timespec dt_exec; 
     // handle probability argument argv
-	//?????
-	int randModifier = 30; //eigetnlich argv
+    int randModifier = argv[1];;
     // get the time stamp for the start time t_Start
-	//?????
-	clock_gettime(clk_id, &t_Start);
+	clock_gettime(CLOCK_REALTIME, &t_Start);
 	
     for (i = 0; i < 5e5; i++){ //  e stands for exponent. 5e5 = 5 * 10^5 = 500000
         randomValue = rand();
@@ -59,15 +61,14 @@ int main ( int argc , char ** argv ){
     }
 
     // get the time stamp for the completion time t_Compl
-	//?????
-	clock_gettime(clk_id, &t_End);
+	clock_gettime(CLOCK_REALTIME, &t_End);
 	
 	// calculate the execution time dt_exec
-    dt_exec = diff_time(&start, &end);
+    dt_exec = diff_time(&t_Start, &t_End);
 
 	// print the results
-    printf("Start-time      : %11ld s %9ld ns", t_Start.tv_sec,t_Start.tv_nsec);
-    printf("Completion-time : %11ld s %9ld ns", t_Compl.tv_sec,T_Compl.tv_nsec);
-    printf("Execution-time  : %11ld s %9ld ns", dt_exec.tv_sec,dt_exec.tv_nsec);
+    printf("Start-time      : %11ld s %9ld \n", t_Start.tv_sec,t_Start.tv_nsec);
+    printf("Completion-time : %11ld s %9ld \n", t_End.tv_sec,t_End.tv_nsec);
+    printf("Execution-time  : %11ld s %9ld \n", dt_exec.tv_sec,dt_exec.tv_nsec);
     return 0;
 }
